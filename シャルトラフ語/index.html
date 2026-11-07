@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <title>shltrafin 公式サイト</title>
+    <style>
+        /* --------------------------------------------------
+           【重要】独自フォント（Shltraf_12）の読み込み設定
+        -------------------------------------------------- */
+        @font-face {
+            font-family: 'Shltraf_12';
+            src: url('Shltraf_12-Regular.ttf') format('truetype'); 
+            font-display: swap;
+        }
+
+        /* シャレイア語公式サイト（Avendia）をイメージした知的でクリーンな配色 */
+        :root {
+            --bg-body: #ffffff;           /* 完全にクリーンな白ベース */
+            --bg-section: #fcfdfe;       /* わずかに青みがかった極薄グレー */
+            --text-main: #1a202c;        /* 視認性の高い墨色 */
+            --text-muted: #4a5568;       /* 補足文用の落ち着いたグレー */
+            --color-primary: #0f4c81;     /* 知的なロイヤルブルー（主色） */
+            --color-accent: #d97706;      /* 上品なアンバー/ゴールド（差し色） */
+            --border-light: #e2e8f0;     /* 繊細な細いボーダー */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+            line-height: 1.8;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 画面上部のミニマルなヘッダーリンクバー */
+        header {
+            border-bottom: 1px solid var(--border-light);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        /* サイトの基本ナビゲーション（シンプルに横並び） */
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-left: 20px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        /* メインのコンテナ */
+        .container {
+            max-width: 850px;
+            margin: 60px auto 100px auto;
+            padding: 0 25px;
+        }
+
+        /* ウェルカムセクション（独自フォントを美しく見せる巨大ロゴ） */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 70px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .conlang-logo {
+            font-family: 'Shltraf_12', sans-serif;
+            font-size: 4.8rem;
+            color: var(--color-primary);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .site-description {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin: 15px 0 0 0;
+            letter-spacing: 1px;
+        }
+
+        /* 翻訳サンプルのレイアウト（不思議の国のアリス風の導入テキスト） */
+        .translation-block {
+            background-color: var(--bg-section);
+            border-left: 3px solid var(--color-primary);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+
+        .conlang-sample-text {
+            font-family: 'Shltraf_12', sans-serif;
+            font-size: 1.4rem;
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .japanese-translation {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-style: normal;
+        }
+
+        /* 目次・インデックスのようなモダンで整然としたグリッド */
+        .index-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 600px) {
+            .index-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ドキュメントへのカード型リンク */
+        .index-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: inherit;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .index-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 12px rgba(15, 76, 129, 0.05);
+        }
+
+        .index-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.15rem;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+        }
+
+        /* 差し色（ゴールド）の小さなワンポイントマーク */
+        .index-card h3::before {
+            content: "•";
+            color: var(--color-accent);
+            font-size: 1.5rem;
+            margin-right: 8px;
+            line-height: 0;
+        }
+
+        .index-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* フッター（著作権表記などをシンプルに） */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background-color: var(--bg-section);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 横並びのすっきりしたヘッダーリンク -->
+    <header>
+        <a href="index.html" class="header-title">Shltrafin Portal</a>
+        <nav>
+            <a href="index.html">トップ</a>
+            <a href="document.html">文法</a>
+            <a href="translations.html">翻訳文</a>
+            <a href="diary.html">製作日記</a>
+            <a href="links.html">リンク集</a>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div class="container">
+        
+        <!-- 巨大ロゴセクション -->
+        <div class="hero-section">
+            <h1 class="conlang-logo">Shltrafin</h1>
+            <p class="site-description">人工言語「Shltrafin」の公式設定資料およびオンライン辞典</p>
+        </div>
+
+        <!-- イントロダクション文章 -->
+        <p>shltrafinは、動詞の活用を極限まで単純化する目的で制作されている人工言語です。このサイトでは、一から言語を学ぶことができるオンライン文法書や、語彙の設計プロセス、これまでに翻訳した様々な文章などの資料を公開しています。</p>
+
+        <!-- 翻訳サンプル（Avendia風のアリス翻訳オマージュなど） -->
+        <div class="translation-block">
+            <span class="conlang-sample-text">gma lua powneza gm leng.</span>
+            <div class="japanese-translation">「私はこの言語を作った。」 — 翻訳作品集より抜粋</div>
+        </div>
+
+        <!-- ドキュメント目次グリッド -->
+        <div class="index-grid">
+            
+            <a href="document.html" class="index-card">
+                <h3>文法解説</h3>
+                <p>初学者向けの入門テキストから、詳細な音韻・音節構造、格変化のシステムまで。論理的に定義された規則を網羅しています。</p>
+            </a>
+
+            <a href="translations.html" class="index-card">
+                <h3>翻訳文</h3>
+                <p>日本語から翻訳された文を掲示しています。</p>
+            </a>
+
+            <a href="links.html" class="index-card">
+                <h3>リンク集</h3>
+                <p>Discordのメンバーシップサーバーのリンクなどを掲載しています。</p>
+            </a>
+
+            <a href="diary.html" class="index-card">
+                <h3>製作日記</h3>
+                <p>単語を新しく造る際（造語作業）の思考の軌跡や、文法上の課題に関する考察を不定期に綴っています。</p>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- シンプルなフッター -->
+    <footer>
+        <p>&copy;2026 Shltraf <br>Licensed under CC BY-NC-ND 4.0</p>
+    </footer>
+
+</body>
+</html>

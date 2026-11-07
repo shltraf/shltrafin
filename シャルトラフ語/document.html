@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="人工言語 Shltrafin の公式文法資料。">
+  <title>文法書 | Shltrafin Portal</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+
+  <style>
+    @font-face {
+      font-family: "Shltraf_12";
+      src: url("Shltraf_12-Regular.ttf") format("truetype");
+      font-display: swap;
+    }
+
+    :root {
+      color-scheme: light;
+      --bg: #fff;
+      --surface: #fcfdfe;
+      --text: #1a202c;
+      --muted: #647184;
+      --primary: #0f4c81;
+      --accent: #d97706;
+      --border: #e2e8f0;
+      --sidebar-width: 258px;
+      --header-height: 62px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      line-height: 1.8;
+    }
+
+    a { color: inherit; }
+    button { font: inherit; }
+
+    .site-header {
+      min-height: var(--header-height);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 0 max(24px, calc((100vw - 1240px) / 2));
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      color: var(--primary);
+      font-size: 1.02rem;
+      font-weight: 750;
+      letter-spacing: .06em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .global-nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .global-nav a {
+      color: var(--muted);
+      font-size: .88rem;
+      text-decoration: none;
+      transition: color .18s ease;
+    }
+
+    .global-nav a:hover,
+    .global-nav a[aria-current="page"] {
+      color: var(--primary);
+    }
+
+    .global-nav a[aria-current="page"] {
+      font-weight: 700;
+    }
+
+    .page-layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      max-width: 1440px;
+      min-height: calc(100vh - var(--header-height));
+      margin: 0 auto;
+    }
+
+    .sidebar {
+      align-self: stretch;
+      padding: 38px 25px 50px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+    }
+
+    .sidebar-inner {
+      position: sticky;
+      top: calc(var(--header-height) + 28px);
+    }
+
+    .sidebar-heading {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 750;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .chapter-label {
+      margin: 27px 0 9px;
+      color: var(--muted);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .chapter-label:first-of-type { margin-top: 0; }
+
+    .toc {
+      display: grid;
+      gap: 4px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .toc button {
+      width: 100%;
+      padding: 8px 10px;
+      border: 0;
+      border-left: 2px solid transparent;
+      border-radius: 0 5px 5px 0;
+      color: var(--text);
+      background: transparent;
+      text-align: left;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: background .18s ease, color .18s ease, border-color .18s ease;
+    }
+
+    .toc button:hover:not(:disabled) {
+      color: var(--primary);
+      background: #f1f5f9;
+    }
+
+    .toc button[aria-current="true"] {
+      color: var(--primary);
+      background: #edf3f8;
+      border-left-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .toc button:disabled {
+      color: #a0a9b5;
+      cursor: not-allowed;
+    }
+
+    .toc button:disabled::after {
+      content: "準備中";
+      float: right;
+      font-size: .68rem;
+      font-weight: 400;
+    }
+
+    .document {
+      width: 100%;
+      max-width: 900px;
+      padding: 54px clamp(25px, 6vw, 76px) 100px;
+    }
+
+    .document-topline {
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 750;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .content-section { display: none; }
+    .content-section.active {
+      display: block;
+      animation: section-in .28s ease both;
+    }
+
+    @keyframes section-in {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .document h1 {
+      margin: 0 0 28px;
+      padding-bottom: 17px;
+      border-bottom: 1px solid var(--border);
+      color: var(--primary);
+      font-size: clamp(1.65rem, 3vw, 2.1rem);
+      line-height: 1.35;
+      letter-spacing: .01em;
+    }
+
+    .document h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 42px 0 17px;
+      font-size: 1.28rem;
+      line-height: 1.5;
+    }
+
+    .document h2::before {
+      content: "§";
+      color: var(--accent);
+      font-family: Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+
+    .document p {
+      margin: 0 0 18px;
+      color: #374151;
+      font-size: .96rem;
+    }
+
+    .lang-inline,
+    .conlang-text,
+    .conlang-td {
+      font-family: "Shltraf_12", sans-serif;
+      font-weight: 400;
+    }
+
+    .lang-inline {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 4px;
+      color: var(--primary);
+      background: #f1f5f9;
+      font-size: 1.12rem;
+      vertical-align: baseline;
+    }
+
+    .example-box {
+      margin: 25px 0;
+      padding: 21px 23px;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      border-radius: 5px;
+      background: var(--surface);
+    }
+
+    .conlang-text {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--primary);
+      font-size: 1.45rem;
+      letter-spacing: .025em;
+      overflow-wrap: anywhere;
+    }
+
+    .translation-text {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .table-wrap {
+      width: 100%;
+      margin: 23px 0 30px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .doc-table {
+      width: 100%;
+      min-width: 440px;
+      border-collapse: collapse;
+      font-size: .91rem;
+    }
+
+    .doc-table th,
+    .doc-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .doc-table tr:last-child td { border-bottom: 0; }
+
+    .doc-table th {
+      color: var(--primary);
+      background: var(--surface);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .doc-table .conlang-td {
+      color: var(--primary);
+      font-size: 1.18rem;
+    }
+
+    .page-footer {
+      padding: 25px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+      text-align: center;
+      font-size: .8rem;
+    }
+
+    .page-footer p { margin: 0; }
+
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid rgba(15,76,129,.28);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 800px) {
+      .site-header {
+        min-height: auto;
+        padding: 13px 18px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .global-nav {
+        width: 100%;
+        gap: 20px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+      .global-nav a { white-space: nowrap; }
+      .page-layout { grid-template-columns: 1fr; }
+      .sidebar {
+        padding: 20px 18px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .sidebar-inner { position: static; }
+      .toc {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .chapter-label { margin-top: 17px; }
+      .toc button {
+        width: auto;
+        padding: 6px 9px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        font-size: .82rem;
+      }
+      .toc button[aria-current="true"] {
+        border-color: var(--primary);
+      }
+      .toc button:disabled::after { display: none; }
+      .document {
+        max-width: none;
+        padding: 35px 21px 70px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">Shltrafin Portal</a>
+    <nav class="global-nav" aria-label="メインナビゲーション">
+      <a href="index.html">トップ</a>
+      <a href="document.html" aria-current="page">文法</a>
+      <a href="translations.html">翻訳文</a>
+      <a href="diary.html">製作日記</a>
+      <a href="links.html">リンク集</a>
+    </nav>
+  </header>
+
+  <div class="page-layout">
+    <aside class="sidebar" aria-label="文法書の目次">
+      <div class="sidebar-inner">
+        <p class="sidebar-heading">Contents</p>
+
+        <p class="chapter-label">第1部　音韻論</p>
+        <ul class="toc">
+          <li><button type="button" class="menu-btn" data-target="sec-1-1" aria-current="true">1.1 文字</button></li>
+          <li><button type="button" class="menu-btn" data-target="sec-1-2" aria-current="false">1.2 品詞</button></li>
+        </ul>
+
+        <p class="chapter-label">第2部　形態論</p>
+        <ul class="toc">
+          <li><button type="button" class="menu-btn" data-target="sec-2-1" aria-current="true">2.1 動詞の活用</button></li>
+         
+        </ul>
+      </div>
+    </aside>
+
+    <main class="document">
+      <div class="document-topline">Grammar / Shltrafin</div>
+
+      <section id="sec-1-1" class="content-section active" aria-labelledby="heading-1-1">
+        <h1 id="heading-1-1">1.1 音素と文字</h1>
+        <p>本章では、人工言語「shltrafin」における文字体系、およびそれを表記するための独自文字の対応規則について解説します。</p>
+
+        <h2>文字の一覧</h2>
+        <p>shltrafinは、26個の基本文字によって構成されます。文章中や単語を説明する際は、このように <span class="lang-inline">abcde</span> とインラインで文字を表示させることができます。</p>
+
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>文字</th><th>アルファベット</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="conlang-td">a</td><td>a</td></tr>
+              <tr><td class="conlang-td">b</td><td>b</td></tr>
+              <tr><td class="conlang-td">c</td><td>c</td></tr>
+              <tr><td class="conlang-td">d</td><td>d</td></tr>
+              <tr><td class="conlang-td">e</td><td>e</td></tr>
+              <tr><td class="conlang-td">f</td><td>f</td></tr>
+              <tr><td class="conlang-td">g</td><td>g</td></tr>
+              <tr><td class="conlang-td">h</td><td>h</td></tr>
+              <tr><td class="conlang-td">i</td><td>i</td></tr>
+              <tr><td class="conlang-td">j</td><td>j</td></tr>
+              <tr><td class="conlang-td">k</td><td>k</td></tr>
+              <tr><td class="conlang-td">l</td><td>l</td></tr>
+              <tr><td class="conlang-td">m</td><td>m</td></tr>
+              <tr><td class="conlang-td">n</td><td>n</td></tr>
+              <tr><td class="conlang-td">o</td><td>o</td></tr>
+              <tr><td class="conlang-td">p</td><td>p</td></tr>
+              <tr><td class="conlang-td">q</td><td>q</td></tr>
+              <tr><td class="conlang-td">r</td><td>r</td></tr>
+              <tr><td class="conlang-td">s</td><td>s</td></tr>
+              <tr><td class="conlang-td">t</td><td>t</td></tr>
+              <tr><td class="conlang-td">u</td><td>u</td></tr>
+              <tr><td class="conlang-td">v</td><td>v</td></tr>
+              <tr><td class="conlang-td">w</td><td>w</td></tr>
+              <tr><td class="conlang-td">x</td><td>x</td></tr>
+              <tr><td class="conlang-td">y</td><td>y</td></tr>
+              <tr><td class="conlang-td">z</td><td>z</td></tr>
+             
+            </tbody>
+          </table>
+        </div>
+
+        <h2>例文による解説</h2>
+        <p>主語の性質によって動詞の接尾辞が変化するため、文字の綴りと発音記号の並びは厳密な論理的一致を保ちます。</p>
+
+        <div class="example-box">
+          <span class="conlang-text">abcde fghij klmno.</span>
+          <div class="translation-text">「私はその美しい星の軌道を静かに観測していた。」</div>
+        </div>
+
+        <p>詳細な統語論（語順のルール）については、第2部「動詞の活用体系」以降でさらに掘り下げていきます。</p>
+      </section>
+
+      <section id="sec-1-2" class="content-section" aria-labelledby="heading-1-2" hidden>
+        <h1 id="heading-1-2">1.2 品詞</h1>
+        <p>本章では、人工言語「shltrafin」における品詞体系について解説します。</p>
+
+        <h2>品詞の一覧</h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>品詞</th><th>詳細</th></tr></thead>
+            <tbody>
+              <tr><td class="conlang-td">名詞</td><td>物の名前を表す品詞。</td></tr>
+              <tr><td class="conlang-td">動詞</td><td>動作を表す品詞。</td></tr>
+              <tr><td class="conlang-td">副詞・助詞</td><td>文のつながりに関係する品詞。</td></tr>
+              <tr><td class="conlang-td">文末詞</td><td>文の種類を表す品詞。</td></tr>
+              <tr><td class="conlang-td">文頭反応詞</td><td>独立語として、挨拶や反応を表す品詞。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>これ以外にも品詞自体はありますが、これらが最も使用する品詞です。文末詞に関してはshltrafin特有なのでいくつか覚えておくといいかもしれません。</p>
+         <table class="doc-table">
+            <thead><tr><th>単語</th><th>詳細</th></tr></thead>
+            <tbody>
+              <tr><td class="conlang-td">if</td><td>前の文を疑問文にします。?とセットの時が多いです。</td></tr>
+              <tr><td class="conlang-td">id</td><td>前の文を命令文にします。</td></tr>
+              <tr><td class="conlang-td">ise</td><td>前の文を丁寧な表現にします。</td></tr>
+              
+            </tbody>
+          </table>
+      </section>
+      <section id="sec-2-1" class="content-section" aria-labelledby="heading-1-2" hidden>
+        <h1 id="heading-2-1">2.1 動詞の活用</h1>
+        <p>本章では、人工言語「Shltrafin」における動詞の活用体系について解説します。</p>
+
+        <h2>動詞の活用</h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>活用</th><th>詳細</th></tr></thead>
+            <tbody>
+              <tr><td class="conlang-td">過去形</td><td>過去の動作を表す活用。</td></tr>
+              <tr><td class="conlang-td">仮定・未来不確定形</td><td>未来の確定してない動作を表す活用。</td></tr>
+              <tr><td class="conlang-td">予定・未来確定形</td><td>未来の確定した動作を表す活用。</td></tr>
+              <tr><td class="conlang-td">現在進行形</td><td>現在進行中の動作を表す活用。</td></tr>
+              <tr><td class="conlang-td">完了形</td><td>すでに完了した動作を表す活用</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="page-footer">
+    <p>&copy; 2026 Shltraf <br>Licensed under CC BY-NC-ND</p>
+  </footer>
+
+  <script>
+    (() => {
+      const buttons = [...document.querySelectorAll(".menu-btn")];
+      const sections = [...document.querySelectorAll(".content-section")];
+
+      function showSection(id, updateHash = true) {
+        const target = document.getElementById(id);
+        if (!target || !target.classList.contains("content-section")) return;
+
+        sections.forEach(section => {
+          const isActive = section === target;
+          section.classList.toggle("active", isActive);
+          section.hidden = !isActive;
+        });
+
+        buttons.forEach(button => {
+          const isActive = button.dataset.target === id;
+          button.setAttribute("aria-current", String(isActive));
+        });
+
+        if (updateHash && history.replaceState) {
+          history.replaceState(null, "", `#${id}`);
+        }
+      }
+
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          showSection(button.dataset.target);
+          if (window.matchMedia("(max-width: 800px)").matches) {
+            document.querySelector(".document").scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          }
+        });
+      });
+
+      const initialId = location.hash.slice(1);
+      if (initialId && document.getElementById(initialId)?.classList.contains("content-section")) {
+        showSection(initialId, false);
+      } else {
+        showSection("sec-1-1", false);
+      }
+    })(); 
+     </script>
+ </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <meta name="description" content="人工言語 shltrafin の翻訳文のアーカイブ。">
+  <title>翻訳文 | Shltrafin Portal</title>
+  <style>
+    @font-face {
+      font-family: "Shltraf_12";
+      src: url("Shltraf_12-Regular.ttf") format("truetype");
+      font-display: swap;
+    }
+    :root {
+      --bg:#fff; --surface:#fcfdfe; --text:#1a202c; --muted:#647184;
+      --primary:#0f4c81; --accent:#d97706; --border:#e2e8f0;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; color:var(--text); background:var(--bg);
+      font-family:"Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+      line-height:1.8;
+    }
+    .site-header {
+      min-height:62px; position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between; gap:24px;
+      padding:0 max(24px,calc((100vw - 1120px)/2));
+      background:rgba(255,255,255,.94); border-bottom:1px solid var(--border);
+      backdrop-filter:blur(14px);
+    }
+    .brand { color:var(--primary); font-size:1.02rem; font-weight:750; letter-spacing:.06em; text-decoration:none; }
+    nav { display:flex; gap:25px; }
+    nav a { color:var(--muted); font-size:.88rem; text-decoration:none; white-space:nowrap; }
+    nav a:hover, nav a[aria-current="page"] { color:var(--primary); }
+    nav a[aria-current="page"] { font-weight:700; }
+    main { max-width:940px; margin:0 auto; padding:68px 25px 100px; }
+    .eyebrow { margin:0 0 12px; color:var(--accent); font-size:.75rem; font-weight:750; letter-spacing:.15em; }
+    h1 { margin:0; padding-bottom:20px; border-bottom:1px solid var(--border); color:var(--primary); font-size:clamp(2rem,5vw,3rem); line-height:1.25; }
+    .intro { max-width:680px; margin:22px 0 48px; color:var(--muted); font-size:.97rem; }
+    .section-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:17px; }
+    h2 { margin:0; font-size:1.25rem; }
+    .count { color:var(--muted); font-size:.78rem; letter-spacing:.08em; }
+    .translation-list { display:grid; gap:18px; }
+    .translation-card { overflow:hidden; border:1px solid var(--border); border-radius:7px; background:#fff; }
+    .card-head { display:flex; align-items:center; justify-content:space-between; gap:15px; padding:13px 20px; border-bottom:1px solid var(--border); background:var(--surface); }
+    .card-title { margin:0; font-size:.91rem; font-weight:700; }
+    .card-type { color:var(--muted); font-size:.72rem; letter-spacing:.08em; }
+    .card-body { padding:23px 22px 25px; }
+    .source-label,.translation-label { margin:0 0 8px; color:var(--muted); font-size:.72rem; font-weight:700; letter-spacing:.12em; }
+    .source-text { margin:0 0 21px; color:var(--primary); font-family:"Shltraf_12",sans-serif; font-size:clamp(1.35rem,3vw,1.75rem); line-height:1.65; overflow-wrap:anywhere; }
+    .translated-text { margin:0; color:var(--text); font-size:1rem; }
+    .empty-note { margin-top:30px; padding:17px 19px; border-left:2px solid var(--accent); background:var(--surface); color:var(--muted); font-size:.86rem; }
+    footer { padding:27px 20px; border-top:1px solid var(--border); background:var(--surface); color:var(--muted); text-align:center; font-size:.8rem; }
+    footer p { margin:0; }
+    @media(max-width:650px) {
+      .site-header { align-items:flex-start; flex-direction:column; gap:8px; padding:13px 18px; }
+      nav { width:100%; gap:20px; overflow-x:auto; padding-bottom:2px; }
+      main { padding:43px 20px 75px; }
+      .card-head,.card-body { padding-left:16px; padding-right:16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">Shltrafin Portal</a>
+    <nav aria-label="メインナビゲーション">
+      <a href="index.html">トップ</a>
+      <a href="document.html">文法</a>
+      <a href="translations.html" aria-current="page">翻訳文</a>
+      <a href="diary.html">製作日記</a>
+      <a href="links.html">リンク集</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">ARCHIVE / TRANSLATIONS</p>
+    <h1>翻訳文</h1>
+    <p class="intro">shltrafinで書かれた文章と、その日本語訳を掲載するページです。原文の綴りや独自フォントの字形を確認しながら、訳文と読み比べることができます。</p>
+
+    <section aria-labelledby="works-heading">
+      <div class="section-heading">
+        <h2 id="works-heading">収録作品</h2>
+        <span class="count">TRANSLATION ARCHIVE</span>
+      </div>
+
+      <div class="translation-list">
+        <article class="translation-card">
+          <div class="card-head">
+            <h3 class="card-title">訳文 001</h3>
+            <span class="card-type">短文</span>
+          </div>
+          <div class="card-body">
+            <p class="source-label">SHLTRAFIN</p>
+            <p class="source-text" lang="und">gma lua powneza gm leng.</p>
+            <p class="translation-label">日本語訳</p>
+            <p class="translated-text">「私はこの言語を作った。」</p>
+          </div>
+        </article>
+      </div>
+
+      <p class="empty-note">このページには、現在サイト内で公開できる翻訳文を掲載しています。新しい翻訳文は、同じ形式でこの一覧に追加されます。</p>
+    </section>
+  </main>
+
+  <footer><p>&copy; 2026 Shltraf<br>Licensed under CC BY-NC-ND 4.0</p></footer>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="人工言語 shltrafin の制作過程や文法設計、翻訳作業について記録する制作日記。">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <title>制作日記 | Shltrafin Portal</title>
+  <style>
+    @font-face {
+      font-family: "Shltraf_12";
+      src: url("Shltraf_12-Regular.ttf") format("truetype");
+      font-display: swap;
+    }
+    :root {
+      --bg:#fff; --surface:#fcfdfe; --text:#1a202c; --muted:#647184;
+      --primary:#0f4c81; --accent:#d97706; --border:#e2e8f0;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; color:var(--text); background:var(--bg);
+      font-family:"Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+      line-height:1.8;
+    }
+    .site-header {
+      min-height:62px; position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between; gap:24px;
+      padding:0 max(24px,calc((100vw - 1120px)/2));
+      background:rgba(255,255,255,.94); border-bottom:1px solid var(--border);
+      backdrop-filter:blur(14px);
+    }
+    .brand { color:var(--primary); font-size:1.02rem; font-weight:750; letter-spacing:.06em; text-decoration:none; white-space:nowrap; }
+    nav { display:flex; align-items:center; gap:25px; }
+    nav a { color:var(--muted); font-size:.88rem; text-decoration:none; white-space:nowrap; transition:color .18s; }
+    nav a:hover, nav a[aria-current="page"] { color:var(--primary); }
+    nav a[aria-current="page"] { font-weight:700; }
+
+    main { max-width:1000px; margin:0 auto; padding:70px 25px 105px; }
+    .eyebrow { margin:0 0 13px; color:var(--accent); font-size:.74rem; font-weight:750; letter-spacing:.16em; }
+    h1 { margin:0; color:var(--primary); font-size:clamp(2rem,5vw,3.15rem); line-height:1.2; letter-spacing:.015em; }
+    .lead { max-width:680px; margin:22px 0 55px; color:var(--muted); font-size:.98rem; }
+    .layout { display:grid; grid-template-columns:minmax(0,1fr) 245px; gap:55px; align-items:start; }
+    .section-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding-bottom:13px; border-bottom:1px solid var(--border); }
+    .section-head h2 { margin:0; font-size:1.2rem; }
+    .section-head span { color:var(--muted); font-size:.72rem; letter-spacing:.12em; }
+    .entry-list { display:grid; gap:17px; margin-top:22px; }
+    .entry {
+      padding:23px 24px 24px; border:1px solid var(--border); border-radius:7px;
+      background:#fff; transition:border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .entry:hover { border-color:#b8c9d9; transform:translateY(-2px); box-shadow:0 8px 24px rgba(15,76,129,.045); }
+    .entry-meta { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:11px; color:var(--muted); font-size:.75rem; }
+    .entry-category { padding:2px 8px; border-radius:3px; color:var(--primary); background:#edf3f8; font-weight:700; }
+    .entry h3 { margin:0 0 9px; font-size:1.13rem; line-height:1.5; }
+    .entry p { margin:0; color:#586477; font-size:.9rem; }
+    .entry-link { display:inline-block; margin-top:13px; color:var(--primary); font-size:.83rem; font-weight:700; text-decoration:none; }
+    .entry-link:hover { text-decoration:underline; }
+    .side-panel { padding:20px; border:1px solid var(--border); border-radius:6px; background:var(--surface); }
+    .side-panel + .side-panel { margin-top:15px; }
+    .side-panel h2 { margin:0 0 10px; color:var(--primary); font-size:.9rem; }
+    .side-panel p { margin:0; color:var(--muted); font-size:.84rem; }
+    .side-panel ul { margin:9px 0 0; padding-left:18px; color:var(--muted); font-size:.84rem; }
+    .side-panel li + li { margin-top:5px; }
+    .archive-note { margin-top:28px; padding:15px 18px; border-left:2px solid var(--accent); background:var(--surface); color:var(--muted); font-size:.83rem; }
+    .page-footer { padding:27px 20px; border-top:1px solid var(--border); background:var(--surface); color:var(--muted); text-align:center; font-size:.8rem; }
+    .page-footer p { margin:0; }
+    a:focus-visible { outline:3px solid rgba(15,76,129,.28); outline-offset:3px; border-radius:3px; }
+
+    @media(max-width:760px) {
+      .site-header { align-items:flex-start; flex-direction:column; gap:8px; padding:13px 18px; }
+      nav { width:100%; gap:20px; overflow-x:auto; padding-bottom:2px; }
+      main { padding:45px 20px 75px; }
+      .layout { grid-template-columns:1fr; gap:25px; }
+      .side-column { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+      .side-panel + .side-panel { margin-top:0; }
+    }
+    @media(max-width:480px) {
+      .side-column { grid-template-columns:1fr; }
+      .entry { padding:19px; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      *,*::before,*::after { transition-duration:.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">Shltrafin Portal</a>
+    <nav aria-label="メインナビゲーション">
+      <a href="index.html">トップ</a>
+      <a href="document.html">文法</a>
+      <a href="translations.html">翻訳文</a>
+      <a href="diary.html" aria-current="page">制作日記</a>
+      <a href="links.html">リンク集</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">DEVELOPMENT LOG / SHLTRAFIN</p>
+    <h1>制作日記</h1>
+    <p class="lead">
+      shltrafinが形になっていく過程を記録するページです。
+      文法や語彙を考えたこと、表記体系の調整、翻訳で気づいたことなど、
+      言語を設計する中での発見や試行錯誤を残していきます。
+    </p>
+
+    <div class="layout">
+      <section aria-labelledby="entries-title">
+        <div class="section-head">
+          <h2 id="entries-title">記事一覧</h2>
+          <span>LOG ENTRIES</span>
+        </div>
+
+        <div class="entry-list">
+          <article class="entry">
+            <div class="entry-meta">
+              <span class="entry-category">ABOUT</span>
+              <span>制作日記について</span>
+            </div>
+            <h3>Shltrafinの制作記録</h3>
+            <p>
+              このページでは、人工言語shltrafinの設計や制作に関する記録を公開していきます。
+              音韻・文字・文法・語彙・翻訳など、言語を構成する要素ごとに考えたことを整理し、
+              完成した規則だけでなく、その背景にある検討過程も記録していく予定です。
+            </p>
+          </article>
+        </div>
+        <div class="entry-list">
+          <article class="entry">
+            <div class="entry-meta">
+              <span class="entry-category">NOTICE</span>
+              <span>500語突破！！</span>
+            </div>
+            <h3>総語数が500語を超えました！！</h3>
+            <p>
+              シャルトラフ語の語数が500語を超えました。これからも造語依頼よろしくおねがいします！！
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <aside class="side-column" aria-label="制作日記について">
+        <section class="side-panel">
+          <h2>記録する内容</h2>
+          <ul>
+            <li>文字・音韻体系の設計</li>
+            <li>文法規則の検討</li>
+            <li>語彙や造語の記録</li>
+            <li>翻訳と表現の工夫</li>
+          </ul>
+        </section>
+        <section class="side-panel">
+          <h2>このページについて</h2>
+          <p>制作の進行に合わせて記事を追加していく、Shltrafinの開発ログです。</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="page-footer"><p>&copy; 2026 Shltraf <br>Licensed under CC BY-NC-ND 4.0</p></footer>
+</body>
+</html>

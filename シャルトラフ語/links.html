@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="shltrafinに関係するページやオンライン辞典へのリンク集。">
+<link rel="icon" href="favicon.png" type="image/png">
+<title>関係リンク集 | Shltrafin Portal</title>
+<style>
+:root{--bg:#fff;--surface:#fcfdfe;--text:#1a202c;--muted:#647184;--blue:#0f4c81;--gold:#d97706;--line:#e2e8f0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:"Helvetica Neue",Arial,"Yu Gothic",sans-serif;line-height:1.8}
+header{min-height:62px;position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 max(24px,calc((100vw - 1120px)/2));background:rgba(255,255,255,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+.brand{color:var(--blue);font-weight:750;letter-spacing:.06em;text-decoration:none;white-space:nowrap}nav{display:flex;gap:22px;overflow-x:auto}nav a{color:var(--muted);font-size:.88rem;text-decoration:none;white-space:nowrap}nav a:hover,nav a[aria-current=page]{color:var(--blue)}nav a[aria-current=page]{font-weight:700}
+main{max-width:1000px;margin:auto;padding:70px 25px 100px}.eyebrow{margin:0 0 13px;color:var(--gold);font-size:.74rem;font-weight:750;letter-spacing:.16em}
+h1{margin:0;color:var(--blue);font-size:clamp(2rem,5vw,3.15rem);line-height:1.2}.lead{max-width:700px;margin:22px 0 54px;color:var(--muted)}
+section{margin-top:48px}.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:13px;border-bottom:1px solid var(--line)}.section-head h2{margin:0;font-size:1.18rem}.section-head span{color:var(--muted);font-size:.72rem;letter-spacing:.12em}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:20px}.card{display:block;min-height:145px;padding:21px 23px;border:1px solid var(--line);border-radius:7px;color:inherit;text-decoration:none;transition:border-color .2s,transform .2s,box-shadow .2s}.card:hover{border-color:#b8c9d9;transform:translateY(-2px);box-shadow:0 8px 24px rgba(15,76,129,.05)}
+.type{display:block;margin-bottom:7px;color:var(--gold);font-size:.69rem;font-weight:750;letter-spacing:.13em}.card h3{margin:0 0 7px;color:var(--blue);font-size:1.04rem}.card p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.7}.arrow{display:inline-block;margin-top:12px;color:var(--blue);font-size:.8rem;font-weight:700}
+.note{margin-top:25px;padding:17px 19px;border-left:2px solid var(--gold);background:var(--surface);color:var(--muted);font-size:.83rem}
+footer{padding:27px 20px;border-top:1px solid var(--line);background:var(--surface);color:var(--muted);text-align:center;font-size:.8rem}
+a:focus-visible{outline:3px solid rgba(15,76,129,.28);outline-offset:3px}
+@media(max-width:760px){header{align-items:flex-start;flex-direction:column;gap:8px;padding:13px 18px}nav{width:100%;gap:18px;padding-bottom:2px}main{padding:45px 20px 75px}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.card{min-height:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="index.html">Shltrafin Portal</a>
+<nav aria-label="メインナビゲーション">
+<a href="index.html">トップ</a><a href="document.html">文法</a><a href="translations.html">翻訳文</a><a href="diary.html">制作日記</a><a href="links.html" aria-current="page">リンク集</a>
+</nav>
+</header>
+<main>
+<p class="eyebrow">LINK DIRECTORY / SHLTRAFIN</p>
+<h1>関係リンク集</h1>
+<p class="lead">Shltrafinの学習や制作に関係するページをまとめています。ポータル内の資料と、外部で公開している辞典へここからアクセスできます。</p>
+<section aria-labelledby="portal">
+<div class="section-head"><h2 id="portal">ポータル内のページ</h2><span>PORTAL</span></div>
+<div class="grid">
+<a class="card" href="index.html"><span class="type">HOME</span><h3>トップページ</h3><p>Shltrafinの概要と、このサイトで公開している資料への入口です。</p><span class="arrow">ページを開く ↗</span></a>
+<a class="card" href="document.html"><span class="type">GRAMMAR</span><h3>文法解説</h3><p>Shltrafinの文法や言語の仕組みを確認するための資料です。</p><span class="arrow">ページを開く ↗</span></a>
+<a class="card" href="translations.html"><span class="type">TRANSLATIONS</span><h3>翻訳文</h3><p>Shltrafinによる翻訳と、その日本語訳を掲載しています。</p><span class="arrow">ページを開く ↗</span></a>
+<a class="card" href="diary.html"><span class="type">DEVELOPMENT LOG</span><h3>制作日記</h3><p>文字・音韻・文法・語彙など、言語制作の過程を記録するページです。</p><span class="arrow">ページを開く ↗</span></a>
+</div>
+</section>
+<section aria-labelledby="external">
+<div class="section-head"><h2 id="external">外部サービス・辞典</h2><span>EXTERNAL</span></div>
+<div class="grid">
+<a class="card" href="https://zpdic.ziphil.com/dictionary/shltrafin" target="_blank" rel="noopener noreferrer"><span class="type">ONLINE DICTIONARY</span><h3>Shltrafin オンライン辞典</h3><p>ZpDICで公開しているShltrafinの単語辞典です。単語の検索や語彙の確認に利用できます。</p><span class="arrow">外部サイトを開く ↗</span></a>
+<a class="card" href="https://discord.gg/VMSbVAgY78" target="_blank" rel="noopener noreferrer"><span class="type">MEMBERSHIP</span><h3>shltrafin Discordメンバーシップ</h3><p>Discordのシャルトラフ語メンバーシップです。是非覗いていってね！！</p><span class="arrow">外部サイトを開く ↗</span></a>
+</div>
+<p class="note">外部サイトはShltrafin Portalの管理外で運営されています。リンク先の内容や利用条件は、各サイトで確認してください。</p>
+</section>
+</main>
+<footer class="page-footer"><p>&copy; 2026 Shltraf <br>Licensed under CC BY-NC-ND 4.0</p></footer>
+</body>
+</html>
